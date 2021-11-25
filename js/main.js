@@ -36,7 +36,6 @@ let createElement = (elementType, text, appendTo) => {
 input.focus();
 
 let enterKeyTrigger = (e, btn) => {
-    console.log('hej');
     if (e.key === 'Enter') {
         btn.click();
     }
@@ -54,7 +53,7 @@ async function fetchCountry() {
     }
     displayErrorMessage.innerHTML = '';
     try {
-        let response = await fetch('https://restcountries.com/v3.1/name/' + input.value); //Ta bort sweden och lägg till + input.value
+        let response = await fetch('https://restcountries.com/v3.1/name/' + input.value);
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -62,50 +61,48 @@ async function fetchCountry() {
         console.log(data);
         pageContent.innerHTML = '';
         for (country of data) {
-            let countryName = document.createElement('h1');
-            countryName.innerHTML = country.name.common;
-            let countryContent = document.createElement('div');
-            let capitalHeadLine = document.createElement('h2');
-            capitalHeadLine.innerHTML = 'Capital(s):';
-            countryContent.append(capitalHeadLine);
+            let CountryName = createElement('h1', country.name.common, pageContent);
+            let countryContent = createElement('div', '', pageContent);
+            let capitalHeadLine = createElement('h2', 'Capital', countryContent);
             if (Array.isArray(country.capital)) {
                 for (let capital of country.capital) {
-                    let capitalContainer = document.createElement('section')
-                    let capitalNamesUl = document.createElement('ul');
-                    let capitalNamesLi = document.createElement('li');
-                    capitalNamesLi.innerHTML = capital;
-                    capitalNamesUl.append(capitalNamesLi);
-                    capitalContainer.append(capitalNamesUl);
-                    countryContent.append(capitalContainer);
+                    let section = createElement('section', '', countryContent);
+                    let capitalNamesList = createElement('ul', '', section);
+                    createElement('li', capital, capitalNamesList);
                 }
             } else {
-                let capitalContainer = document.createElement('section');
-                capitalContainer.innerHTML = 'Capital not found';
-                countryContent.append(capitalContainer);
+                let section = createElement('section', 'Capital not found', countryContent);
             }
-            let flagImg = document.createElement('img');
-            flagImg.setAttribute('src', country.flags.png);
-            let currencyHeadLine = document.createElement('h2');
-            currencyHeadLine.innerHTML = 'Currencies:';
-            countryContent.append(currencyHeadLine);
-            for (let [currency, details] of Object.entries(country.currencies)) {
-                let currencyContainer = document.createElement('section');
-                let currencyUl = document.createElement('ul');
-                let currencyLi = document.createElement('li');
-                currencyLi.innerHTML = `${currency} - ${details.name}`;
-                currencyUl.append(currencyLi);
-                currencyContainer.append(currencyUl);
-                countryContent.append(currencyContainer);
-                console.log(currency, details);
+
+            createElement('h2', 'Languages:', countryContent);
+            if (country.languages != undefined) {
+                for (let [languages, details] of Object.entries(country.languages)) {
+                    console.log(country.languages);
+                    let section = createElement('section', '', countryContent);
+                    let languageList = createElement('ul', '', section);
+                    createElement('li', `${details}`, languageList);
+                    // createElement('li', `${languages} - ${details}`, languageList);
+                }
+            } else {
+                let section = createElement('section', 'Language not found', countryContent);
             }
-            let googleMaps = document.createElement('a');
-            googleMaps.innerHTML = 'Click here to see the country on Google Maps';
-            googleMaps.setAttribute('href', country.maps.googleMaps);
 
-            countryContent.append(googleMaps, flagImg);
+            createElement('h2', 'Currencies:', countryContent);
+            if (country.currencies != undefined) {
+                for (let [currency, details] of Object.entries(country.currencies)) {
+                    let section = createElement('section', '', countryContent);
+                    let currencyList = createElement('ul', '', section);
+                    createElement('li', `${currency} - ${details.name}`, currencyList);
+                }
+            } else {
+                let section = createElement('section', 'Currency not found', countryContent);
+            }
 
-            pageContent.append(countryName, countryContent);
+            let googleMapsLink = createElement('a', 'Click here to see where on Earth this country is :)', countryContent);
+            googleMapsLink.setAttribute('href', country.maps.googleMaps);
 
+            let flag = createElement('img', '', countryContent);
+            flag.setAttribute('src', country.flags.png);
         }
 
     } catch (error) {
