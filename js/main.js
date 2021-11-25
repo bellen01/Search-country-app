@@ -21,9 +21,9 @@ flags { png, svg }
 
 
 */
-
 let input = document.getElementById('search-field');
 let searchButton = document.getElementById('search-btn');
+let displayErrorMessage = document.getElementById('display-error-message');
 let pageContent = document.getElementById('content-container');
 
 let createElement = (elementType, text, appendTo) => {
@@ -33,7 +33,26 @@ let createElement = (elementType, text, appendTo) => {
     return element;
 }
 
+input.focus();
+
+let enterKeyTrigger = (e, btn) => {
+    console.log('hej');
+    if (e.key === 'Enter') {
+        btn.click();
+    }
+}
+
+const errorMessage = 'Please fill in the name of the country or language you want to search for';
+function isStringEmpty(text) {
+    return text.trim() === '';
+}
+
 async function fetchCountry() {
+    if (isStringEmpty(input.value)) {
+        displayErrorMessage.innerHTML = errorMessage;
+        return;
+    }
+    displayErrorMessage.innerHTML = '';
     try {
         let response = await fetch('https://restcountries.com/v3.1/name/' + input.value); //Ta bort sweden och lägg till + input.value
         if (!response.ok) {
@@ -49,19 +68,42 @@ async function fetchCountry() {
             let capitalHeadLine = document.createElement('h2');
             capitalHeadLine.innerHTML = 'Capital(s):';
             countryContent.append(capitalHeadLine);
-            for (let capital of country.capital) {
-                let capitalContainer = document.createElement('section')
-                let capitalNamesUl = document.createElement('ul');
-                let capitalNamesLi = document.createElement('li');
-                capitalNamesLi.innerHTML = capital;
-                capitalNamesUl.append(capitalNamesLi);
-                capitalContainer.append(capitalNamesUl);
+            if (Array.isArray(country.capital)) {
+                for (let capital of country.capital) {
+                    let capitalContainer = document.createElement('section')
+                    let capitalNamesUl = document.createElement('ul');
+                    let capitalNamesLi = document.createElement('li');
+                    capitalNamesLi.innerHTML = capital;
+                    capitalNamesUl.append(capitalNamesLi);
+                    capitalContainer.append(capitalNamesUl);
+                    countryContent.append(capitalContainer);
+                }
+            } else {
+                let capitalContainer = document.createElement('section');
+                capitalContainer.innerHTML = 'Capital not found';
                 countryContent.append(capitalContainer);
             }
-            // let nativeName = document.createElement('i');
-            // nativeName.innerHTML = country.name.nativeName.swe.common;
-            let currency = document.createElement('h2');
-            currency.innerHTML = 'Currency';
+            let flagImg = document.createElement('img');
+            flagImg.setAttribute('src', country.flags.png);
+            let currencyHeadLine = document.createElement('h2');
+            currencyHeadLine.innerHTML = 'Currencies:';
+            countryContent.append(currencyHeadLine);
+            for (let [currency, details] of Object.entries(country.currencies)) {
+                let currencyContainer = document.createElement('section');
+                let currencyUl = document.createElement('ul');
+                let currencyLi = document.createElement('li');
+                currencyLi.innerHTML = `${currency} - ${details.name}`;
+                currencyUl.append(currencyLi);
+                currencyContainer.append(currencyUl);
+                countryContent.append(currencyContainer);
+                console.log(currency, details);
+            }
+            let googleMaps = document.createElement('a');
+            googleMaps.innerHTML = 'Click here to see the country on Google Maps';
+            googleMaps.setAttribute('href', country.maps.googleMaps);
+
+            countryContent.append(googleMaps, flagImg);
+
             pageContent.append(countryName, countryContent);
 
         }
@@ -72,4 +114,10 @@ async function fetchCountry() {
     }
 }
 
+input.addEventListener('keyup', (e) => enterKeyTrigger(e, searchButton));
 searchButton.addEventListener('click', fetchCountry);
+
+
+
+            // let nativeName = document.createElement('i');
+            // nativeName.innerHTML = country.name.nativeName.swe.common;
