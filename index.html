@@ -10,7 +10,23 @@
 </head>
 
 <body>
+    <main>
+        <div>
+            <input type="text" id="search-field" placeholder="Sök land på namn eller språk">
+            <!-- <label for="search-options">Välj alternativ</label> -->
+            <select name="search-options" id="search-options">
+                <option value="" selected>Välj alternativ</option>
+                <option value="Namn">Namn</option>
+                <option value="Språk">Språk</option>
+            </select>
+            <button id="search-btn">Sök</button>
+        </div>
 
+        <div id="content-container">
+
+        </div>
+
+    </main>
     <script src="js/main.js"></script>
 </body>
 
