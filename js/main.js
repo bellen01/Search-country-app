@@ -35,48 +35,53 @@ let createElement = (elementType, text, appendTo) => {
     return element;
 }
 
-function createCountryDataSection(countryData, heading) {
-    let section = createElement('section', '', countryData);
-    createElement('h2', heading, section);
+function createCountryDataSection(countryDataElement, headingName) {
+    let section = createElement('section', '', countryDataElement);
+    createElement('h2', headingName, section);
     let list = createElement('ul', '', section);
     return list;
 }
+function createListFromString(text, ulElement, type) {
+    createListFromArray(text === undefined ? [] : [text], ulElement, type);
+}
 
-function createCapitalListItem(countryData, list, text) {
-    if (Array.isArray(countryData)) {
-        for (let data of countryData) {
-            createElement('li', data, list);
+function createListFromArray(array, ulElement, type) {
+    if (Array.isArray(array) && array.length != 0) {
+        for (let data of array) {
+            createElement('li', data, ulElement);
         }
     } else {
-        list.innerHTML = `Sorry, we don't have any information about ${text} at this point.`;
+        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
     }
 }
 
-function createLanguageList(countryData, list, text) {
-    if (countryData != undefined) {
-        for (let data in countryData) {
-            createElement('li', `${countryData[data]}`, list);
+function createListFromObject(obj, ulElement, type) {
+    if (obj != undefined) {
+        for (let data in obj) {
+            createElement('li', `${obj[data]}`, ulElement);
         }
     } else {
-        list.innerHTML = `Sorry, we don't have any information about ${text} at this point.`;
+        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
     }
 }
 
-function createCurrencyList(countryData, list, text) {
-    if (countryData != undefined) {
-        for (let [data, details] of Object.entries(countryData)) {
-            createElement('li', `${data} - ${details.name}`, list);
+function createListFromKeyValueObject(obj, ulElement, type) {
+    if (obj != undefined) {
+        for (let [key, value] of Object.entries(obj)) {
+            createElement('li', `${key} - ${value.name}`, ulElement);
         }
     } else {
-        list.innerHTML = `Sorry, we don't have any information about ${text} at this point.`;
+        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
     }
 }
 
-function createListItem(countryData, list, text) {
-    if (countryData != undefined) {
-        createElement('li', countryData, list);
-    } else {
-        list.innerHTML = `Sorry, we don't have any information about ${text} at this point.`;
+
+function addPicture(countryPicture, picturesElement) {
+    // if (Object.keys(countryPicture).length != 0) {
+    if (countryPicture.hasOwnProperty('png')) {
+        let element = createElement('img', '', picturesElement);
+        element.setAttribute('src', countryPicture.png);
+        element.classList.add('img-size');
     }
 }
 
@@ -110,55 +115,51 @@ async function fetchCountry(link) {
 
         for (country of data) {
             numberOfHits.innerHTML = 'Antal träffar: ' + data.length;
-            let CountryName = createElement('h1', country.name.common, pageContent);
-            let countryContainer = createElement('div', '', pageContent);
-            let countryContent = createElement('div', '', countryContainer);
-            let countryData = createElement('div', '', countryContent);
-            let pictures = createElement('section', '', countryContent);
-            countryData.classList.add('country-data');
-            countryContent.classList.add('country-content');
+            let countryNameElement = createElement('h1', country.name.common, pageContent);
+            let countryContainerElement = createElement('div', '', pageContent);
+            let countryContentElement = createElement('div', '', countryContainerElement);
+            let countryDataElement = createElement('div', '', countryContentElement);
+            let picturesElement = createElement('section', '', countryContentElement);
+            countryDataElement.classList.add('country-data');
+            countryContentElement.classList.add('country-content');
 
-            let capitalList = createCountryDataSection(countryData, 'Capital:');
-            createCapitalListItem(country.capital, capitalList, 'capital'); //ändra namn på funktionen så den blir generell, används för continent också
-
-
-            let regionList = createCountryDataSection(countryData, 'Region:');
-            createListItem(country.region, regionList, 'region');
+            let capitalList = createCountryDataSection(countryDataElement, 'Capital:');
+            createListFromArray(country.capital, capitalList, 'capital'); //ändra namn på funktionen så den blir generell, används för continent också
 
 
-            let subRegionList = createCountryDataSection(countryData, 'Subregion:');
-            createListItem(country.subregion, subRegionList, 'subregion');
-
-            let continentList = createCountryDataSection(countryData, 'Continent:');
-            createCapitalListItem(country.continents, continentList, 'continent'); //ändra namn på funktionen så den blir generell, används för capital och continent
+            let regionList = createCountryDataSection(countryDataElement, 'Region:');
+            createListFromString(country.region, regionList, 'region');
 
 
-            let languageList = createCountryDataSection(countryData, 'Languages:')
-            createLanguageList(country.languages, languageList, 'language');
+            let subRegionList = createCountryDataSection(countryDataElement, 'Subregion:');
+            createListFromString(country.subregion, subRegionList, 'subregion');
 
-            let currencyList = createCountryDataSection(countryData, 'Currencies:')
-            createCurrencyList(country.currencies, currencyList, 'currency');
-
-            let flag = createElement('img', '', pictures);
-            flag.setAttribute('src', country.flags.png);
-            flag.classList.add('img-size');
+            let continentList = createCountryDataSection(countryDataElement, 'Continent:');
+            createListFromArray(country.continents, continentList, 'continent'); //ändra namn på funktionen så den blir generell, används för capital och continent
 
 
-            if (Object.keys(country.coatOfArms).length != 0) {
-                let coatOfArms = createElement('img', '', pictures);
-                coatOfArms.setAttribute('src', country.coatOfArms.png);
-                coatOfArms.classList.add('img-size')
-            }
+            let languageList = createCountryDataSection(countryDataElement, 'Languages:')
+            createListFromObject(country.languages, languageList, 'language');
 
-            // let googleMapsLink = createElement('a', 'Click here to see where on Earth this country is :)', pictures);
-            // googleMapsLink.setAttribute('href', country.maps.googleMaps);
+            let currencyList = createCountryDataSection(countryDataElement, 'Currencies:')
+            createListFromKeyValueObject(country.currencies, currencyList, 'currency');
+
+            addPicture(country.flags, picturesElement);
+
+            addPicture(country.coatOfArms, picturesElement);
+
 
             let mapLink = `<iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBWDn9j820uDjapPD3v7ItsfLu-KNi8ieM&q=${country.name.common}"></iframe>`
-            let mapContainer = createElement('div', mapLink, countryContainer);
+            let mapContainer = createElement('div', mapLink, countryContainerElement);
+
+            countryNameElement.addEventListener('click', () => {
+                $(countryContentElement).slideToggle(100);
+            });
         }
     } catch (error) {
         console.log(error);
         displayErrorMessage.innerHTML = 'Oj, något gick fel. Vänligen försök igen.'
+
     }
 }
 
@@ -172,27 +173,30 @@ searchButton.addEventListener('click', function () {
 });
 
 
+// let googleMapsLink = createElement('a', 'Click here to see where on Earth this country is :)', pictures);
+// googleMapsLink.setAttribute('href', country.maps.googleMaps);
+
 // let language = createElement('section', '', countryData);
 // createElement('h2', 'Languages:', language);
 // let languageList = createElement('ul', '', language);
 // if (country.languages != undefined) {
-//     for (let [languages, details] of Object.entries(country.languages)) {
-//         createElement('li', `${languages} - ${details}`, languageList);
-//     }
-// } else {
-//     language.innerHTML = 'Language not found';
-// }
+    //     for (let [languages, details] of Object.entries(country.languages)) {
+        //         createElement('li', `${languages} - ${details}`, languageList);
+        //     }
+        // } else {
+            //     language.innerHTML = 'Language not found';
+            // }
 
-// let currency = createElement('section', '', countryData);
-// createElement('h2', 'Currencies:', currency);
-// let currencyList = createElement('ul', '', currency);
-// if (country.currencies != undefined) {
-//         for (let currency in country.currencies) {
-//         createElement('li', `${country.currencies[currency].name}`, currencyList);
-//     }
-// } else {
-//     currency.innerHTML = 'Currency not found';
-// }
+            // let currency = createElement('section', '', countryData);
+            // createElement('h2', 'Currencies:', currency);
+            // let currencyList = createElement('ul', '', currency);
+            // if (country.currencies != undefined) {
+                //         for (let currency in country.currencies) {
+                    //         createElement('li', `${country.currencies[currency].name}`, currencyList);
+                    //     }
+                    // } else {
+                        //     currency.innerHTML = 'Currency not found';
+                        // }
 
-            // let nativeName = document.createElement('i');
-            // nativeName.innerHTML = country.name.nativeName.swe.common;
+                        // let nativeName = document.createElement('i');
+                        // nativeName.innerHTML = country.name.nativeName.swe.common;
