@@ -1,3 +1,55 @@
+body {
+    /* background-image: url('../img/Dq6o3uI-world-map-wallpaper-high-resolution.jpg');  */
+}
+
 #display-error-message {
     color: red;
+}
+
+#main-container {
+    background-color: white;
+    opacity: 0.8;
+    margin: auto;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#content-container {
+    width: 100%;
+}
+
+.country-content {
+    display: flex;
+    /* column-gap: 20%; */
+    justify-content: start;
+
+}
+
+.country-data h2,
+section {
+    width: 49%;
+}
+
+.country-data {
+    width: 100%;
+    display: flex;
+    /* flex-direction: column; */
+    flex-wrap: wrap;
+}
+
+a {
+    display: block;
+    padding-bottom: 10px;
+}
+
+div,
+section {
+    background-color: white;
+}
+
+.img-size {
+    width: 320px;
+    display: block;
 }

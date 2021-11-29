@@ -10,24 +10,25 @@
 </head>
 
 <body>
-    <main>
+    <main id='main-container'>
+        <!-- <div id="content-wrapper"> -->
+        <h1>Country wiki</h1>
+        <!-- <i>Here you can search for countries on their names, languages and more!</i> -->
         <div>
             <input type="text" id="search-field" placeholder="Search country or language">
             <!-- <label for="search-options">Välj alternativ</label> -->
-            <!-- <select name="search-options" id="search-options">
-                <option value="" selected>Choose option</option>
-                <option value="Namn">Name</option>
-                <option value="Språk">Language</option>
-            </select> -->
+            <select name="search-options" id="search-options">
+                <option value="name" selected>Choose option</option>
+                <option value="name">Name</option>
+                <option value="language">Language</option>
+            </select>
             <button id="search-btn">Search</button>
-        </div>
-        <div id="display-error-message"></div>
-
-        <div id="content-container">
-
-
+            <div id="display-error-message"></div>
+            <div id="display-number-of-hits"></div>
         </div>
 
+        <div id="content-container"></div>
+        <!-- </div> -->
     </main>
     <script src="js/main.js"></script>
 </body>
