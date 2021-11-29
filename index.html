@@ -12,9 +12,18 @@
 <body>
     <main id='main-container'>
         <!-- <div id="content-wrapper"> -->
-        <h1>Country wiki</h1>
+        <h1>Isabelle's super awesome (but little ugly) country search</h1>
+        <div id="welcome-text">
+            <p>Welcome! Here you can search for countries either on full name, part of name or you can search for
+                countries
+                by a specific language.</p>
+            <p>But be aware that unfortunately we don't support searching on part of a language name at this point.</p>
+            <p>We would also like to inform you that we are not responsible for any misinformation that might occur on
+                this
+                page regarding the countries.</p>
+        </div>
         <!-- <i>Here you can search for countries on their names, languages and more!</i> -->
-        <div>
+        <div id="search">
             <input type="text" id="search-field" placeholder="Search country or language">
             <!-- <label for="search-options">Välj alternativ</label> -->
             <select name="search-options" id="search-options">
@@ -23,9 +32,9 @@
                 <option value="language">Language</option>
             </select>
             <button id="search-btn">Search</button>
-            <div id="display-error-message"></div>
-            <div id="display-number-of-hits"></div>
         </div>
+        <div id="display-error-message"></div>
+        <div id="display-number-of-hits"></div>
 
         <div id="content-container"></div>
         <!-- </div> -->
