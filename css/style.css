@@ -5,7 +5,14 @@ body {
 h2 {
     font-size: 28px;
     color: #F08700;
-    margin: 50px 0 24px 0;
+    margin: 50px 0 0px 0;
+    padding-bottom: 24px;
+    border-bottom: 1px solid black;
+}
+
+h2:hover {
+    color: #a1a7ac;
+    cursor:default;
 }
 
 h3 {
@@ -29,7 +36,6 @@ h3 {
 }
 
 #search-field {
-    /* align-items: center; */
     appearance: none;
     background-color: white;
     border-radius: 24px;
@@ -37,17 +43,11 @@ h3 {
     box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
     box-sizing: border-box;
     color: #3c4043;
-    /* display: inline-flex; */
     font-size: 14px;
     height: 48px;
-    /* justify-content: center; */
     letter-spacing: .25px;
     line-height: normal;
-    /* max-width: 100%; */
-    /* overflow: visible; */
     padding: 2px 24px;
-    /* position: relative; */
-    /* text-transform: none; */
     width: 250px;
 }
 
@@ -57,25 +57,17 @@ h3 {
 }
 
 #search-options {
-    /* align-items: center; */
     background-color: white;
     border-radius: 24px;
     border-style: none;
     box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
     box-sizing: border-box;
     color: #3c4043;
-    /* display: inline-flex; */
-    /* fill: currentcolor; */
     font-size: 14px;
     height: 48px;
-    /* justify-content: center; */
     letter-spacing: .25px;
     line-height: normal;
-    /* max-width: 100%; */
-    /* overflow: visible; */
     padding: 2px 24px;
-    /* position: relative; */
-    /* transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms; */
     width: auto;
 }
 
@@ -88,19 +80,11 @@ h3 {
     box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
     box-sizing: border-box;
     color: #3c4043;
-    /* display: inline-flex; */
-    /* fill: currentcolor; */
     font-size: 14px;
     height: 48px;
-    /* justify-content: center; */
     letter-spacing: .25px;
-    /* line-height: normal; */
-    /* max-width: 100%; */
-    /* overflow: visible; */
     padding: 2px 24px;
-    /* position: relative; */
     text-align: center;
-    /* transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms; */
     width: 100px;
 }
 
@@ -133,7 +117,6 @@ h3 {
 }
 
 .country-content {
-    border-top: 1px solid black;
     display: flex;
     justify-content: start;
 }

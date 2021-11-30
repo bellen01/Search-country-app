@@ -35,60 +35,64 @@ let createElement = (elementType, text, appendTo) => {
     return element;
 }
 
-function createCountryDataSection(countryDataElement, headingName) {
-    let section = createElement('section', '', countryDataElement);
-    createElement('h3', headingName, section);
-    let list = createElement('ul', '', section);
-    return list;
-}
-function createListFromString(text, ulElement, type) {
-    createListFromArray(text === undefined ? [] : [text], ulElement, type);
-}
+let countryDataMethods = {
 
-function createListFromArray(array, ulElement, type) {
-    if (Array.isArray(array) && array.length != 0) {
-        for (let data of array) {
-            createElement('li', data, ulElement);
+    createCountryDataSection(countryDataElement, headingName) {
+        let section = createElement('section', '', countryDataElement);
+        createElement('h3', headingName, section);
+        let list = createElement('ul', '', section);
+        return list;
+    },
+
+    createListFromString(text, ulElement, type) {
+        countryDataMethods.createListFromArray(text === undefined ? [] : [text], ulElement, type);
+    },
+
+    createListFromArray(array, ulElement, type) {
+        if (Array.isArray(array) && array.length != 0) {
+            for (let data of array) {
+                createElement('li', data, ulElement);
+            }
+        } else {
+            ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
         }
-    } else {
-        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
-    }
-}
+    },
 
-function createListFromObject(obj, ulElement, type) {
-    if (obj != undefined) {
-        for (let data in obj) {
-            createElement('li', `${obj[data]}`, ulElement);
+    createListFromObject(obj, ulElement, type) {
+        if (obj != undefined) {
+            for (let data in obj) {
+                createElement('li', `${obj[data]}`, ulElement);
+            }
+        } else {
+            ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
         }
-    } else {
-        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
-    }
-}
+    },
 
-function createListFromKeyValueObject(obj, ulElement, type) {
-    if (obj != undefined) {
-        for (let [key, value] of Object.entries(obj)) {
-            createElement('li', `${key} - ${value.name}`, ulElement);
+    createListFromKeyValueObject(obj, ulElement, type) {
+        if (obj != undefined) {
+            for (let [key, value] of Object.entries(obj)) {
+                createElement('li', `${key} - ${value.name}`, ulElement);
+            }
+        } else {
+            ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
         }
-    } else {
-        ulElement.innerHTML = `Sorry, we don't have any information about ${type} at this point.`;
+    },
+
+    addPicture(countryPicture, picturesElement) {
+        // if (Object.keys(countryPicture).length != 0) {
+        if (countryPicture.hasOwnProperty('png')) {
+            let element = createElement('img', '', picturesElement);
+            element.setAttribute('src', countryPicture.png);
+            element.classList.add('img-size');
+        }
+    },
+
+    formatNumber(obj) {
+        let element = obj;
+        let elementFormatted = Intl.NumberFormat().format(element);
+        return elementFormatted;
     }
-}
 
-
-function addPicture(countryPicture, picturesElement) {
-    // if (Object.keys(countryPicture).length != 0) {
-    if (countryPicture.hasOwnProperty('png')) {
-        let element = createElement('img', '', picturesElement);
-        element.setAttribute('src', countryPicture.png);
-        element.classList.add('img-size');
-    }
-}
-
-function formatNumber(obj) {
-    let element = obj;
-    let elementFormatted = Intl.NumberFormat().format(element);
-    return elementFormatted;
 }
 
 input.focus();
@@ -127,46 +131,46 @@ async function fetchCountry(link) {
             let countryContentElement = createElement('div', '', countryContainerElement);
             let countryDataElement = createElement('div', '', countryContentElement);
             let picturesElement = createElement('section', '', countryContentElement);
-            // countryContainerElement.classList.add('hide')
+            countryContainerElement.classList.add('hide')
             picturesElement.classList.add('pictures');
             countryDataElement.classList.add('country-data');
             countryContentElement.classList.add('country-content');
 
-            let capitalList = createCountryDataSection(countryDataElement, 'Capital:');
-            createListFromArray(country.capital, capitalList, 'capital');
+            let capitalList = countryDataMethods.createCountryDataSection(countryDataElement, 'Capital:');
+            countryDataMethods.createListFromArray(country.capital, capitalList, 'capital');
 
-            let regionList = createCountryDataSection(countryDataElement, 'Region:');
-            createListFromString(country.region, regionList, 'region');
+            let regionList = countryDataMethods.createCountryDataSection(countryDataElement, 'Region:');
+            countryDataMethods.createListFromString(country.region, regionList, 'region');
 
-            let subRegionList = createCountryDataSection(countryDataElement, 'Subregion:');
-            createListFromString(country.subregion, subRegionList, 'subregion');
+            let subRegionList = countryDataMethods.createCountryDataSection(countryDataElement, 'Subregion:');
+            countryDataMethods.createListFromString(country.subregion, subRegionList, 'subregion');
 
-            let continentList = createCountryDataSection(countryDataElement, 'Continent:');
-            createListFromArray(country.continents, continentList, 'continent');
+            let continentList = countryDataMethods.createCountryDataSection(countryDataElement, 'Continent:');
+            countryDataMethods.createListFromArray(country.continents, continentList, 'continent');
 
-            let languageList = createCountryDataSection(countryDataElement, 'Languages:');
-            createListFromObject(country.languages, languageList, 'language');
+            let languageList = countryDataMethods.createCountryDataSection(countryDataElement, 'Languages:');
+            countryDataMethods.createListFromObject(country.languages, languageList, 'language');
 
-            let currencyList = createCountryDataSection(countryDataElement, 'Currencies:');
-            createListFromKeyValueObject(country.currencies, currencyList, 'currency');
+            let currencyList = countryDataMethods.createCountryDataSection(countryDataElement, 'Currencies:');
+            countryDataMethods.createListFromKeyValueObject(country.currencies, currencyList, 'currency');
 
-            let countryPopulationFormatted = formatNumber(country.population)
-            let populationList = createCountryDataSection(countryDataElement, 'Population:');
-            createListFromString(countryPopulationFormatted, populationList, 'population');
+            let countryPopulationFormatted = countryDataMethods.formatNumber(country.population)
+            let populationList = countryDataMethods.createCountryDataSection(countryDataElement, 'Population:');
+            countryDataMethods.createListFromString(countryPopulationFormatted, populationList, 'population');
 
-            let timeZoneList = createCountryDataSection(countryDataElement, 'Timezone:');
-            createListFromArray(country.timezones, timeZoneList, 'timezone');
+            let timeZoneList = countryDataMethods.createCountryDataSection(countryDataElement, 'Timezone:');
+            countryDataMethods.createListFromArray(country.timezones, timeZoneList, 'timezone');
 
-            addPicture(country.flags, picturesElement);
+            countryDataMethods.addPicture(country.flags, picturesElement);
 
-            addPicture(country.coatOfArms, picturesElement);
+            countryDataMethods.addPicture(country.coatOfArms, picturesElement);
 
             let mapLink = `<iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBWDn9j820uDjapPD3v7ItsfLu-KNi8ieM&q=${country.name.common}"></iframe>`
             let mapContainer = createElement('div', mapLink, countryContainerElement);
 
-            // countryNameElement.addEventListener('click', () => {
-            //     $(countryContainerElement).slideToggle(100);
-            // });
+            countryNameElement.addEventListener('click', () => {
+                $(countryContainerElement).slideToggle(100);
+            });
         }
     } catch (error) {
         console.log(error);
