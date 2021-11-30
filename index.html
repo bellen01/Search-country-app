@@ -6,35 +6,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search country</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
     <main id='main-container'>
-        <!-- <div id="content-wrapper"> -->
         <h1>Isabelle's super awesome (but little ugly) country search</h1>
         <div id="welcome-text">
-            <p>Welcome! Here you can search for countries either on full name, part of name or you can search for
-                countries
-                by a specific language.</p>
-            <p>Please keep in mind that unfortunately we don't support searching on part of a language at this
-                point.
-            </p>
-            <p>We would also like to inform you that we are not responsible for any misinformation that might occur on
-                this
-                page regarding the countries.</p>
+            <p>Welcome! Here you can search for countries either on full name or part of name, or you can search for
+                countries by capital or a specific language.</p>
+            <p>Please keep in mind that unfortunately we don't fully support searching on part of language at this
+                point.</p>
+            <p>When getting multiple hits, click on the name of a country to get more information!</p>
         </div>
-        <!-- <i>Here you can search for countries on their names, languages and more!</i> -->
         <div id="search">
-            <input type="text" id="search-field" placeholder="Search country or language">
-            <!-- <label for="search-options">Välj alternativ</label> -->
+            <input type="text" id="search-field" placeholder="Search country, language or capital">
             <select name="search-options" id="search-options">
-                <option value="choose-option" selected>Choose option</option>
-                <option value="name">Name</option>
+                <option value="name" selected>Name</option>
                 <option value="language">Language</option>
+                <option value="capital">Capital</option>
             </select>
             <button id="search-btn">Search</button>
         </div>
@@ -42,7 +32,6 @@
         <div id="display-number-of-hits"></div>
 
         <div id="content-container"></div>
-        <!-- </div> -->
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="js/main.js"></script>
