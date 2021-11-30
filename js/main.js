@@ -85,6 +85,12 @@ function addPicture(countryPicture, picturesElement) {
     }
 }
 
+function formatNumber(obj) {
+    let element = obj;
+    let elementFormatted = Intl.NumberFormat().format(element);
+    return elementFormatted;
+}
+
 input.focus();
 
 let enterKeyTrigger = (e, btn) => {
@@ -115,6 +121,7 @@ async function fetchCountry(link) {
 
         for (country of data) {
             numberOfHits.innerHTML = 'Antal träffar: ' + data.length;
+            data.sort();
             let countryNameElement = createElement('h2', country.name.common, pageContent);
             let countryContainerElement = createElement('div', '', pageContent);
             let countryContentElement = createElement('div', '', countryContainerElement);
@@ -137,11 +144,18 @@ async function fetchCountry(link) {
             let continentList = createCountryDataSection(countryDataElement, 'Continent:');
             createListFromArray(country.continents, continentList, 'continent');
 
-            let languageList = createCountryDataSection(countryDataElement, 'Languages:')
+            let languageList = createCountryDataSection(countryDataElement, 'Languages:');
             createListFromObject(country.languages, languageList, 'language');
 
-            let currencyList = createCountryDataSection(countryDataElement, 'Currencies:')
+            let currencyList = createCountryDataSection(countryDataElement, 'Currencies:');
             createListFromKeyValueObject(country.currencies, currencyList, 'currency');
+
+            let countryPopulationFormatted = formatNumber(country.population)
+            let populationList = createCountryDataSection(countryDataElement, 'Population:');
+            createListFromString(countryPopulationFormatted, populationList, 'population');
+
+            let timeZoneList = createCountryDataSection(countryDataElement, 'Timezone:');
+            createListFromArray(country.timezones, timeZoneList, 'timezone');
 
             addPicture(country.flags, picturesElement);
 
@@ -150,16 +164,23 @@ async function fetchCountry(link) {
             let mapLink = `<iframe width="100%" height="450" style="border:0" loading="lazy" allowfullscreen src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBWDn9j820uDjapPD3v7ItsfLu-KNi8ieM&q=${country.name.common}"></iframe>`
             let mapContainer = createElement('div', mapLink, countryContainerElement);
 
-            countryNameElement.addEventListener('click', () => {
-                $(countryContainerElement).slideToggle(100);
-            });
+            // countryNameElement.addEventListener('click', () => {
+            //     $(countryContainerElement).slideToggle(100);
+            // });
         }
     } catch (error) {
         console.log(error);
-        displayErrorMessage.innerHTML = 'Ooops, something went wrong. Please try again.'
+        displayErrorMessage.innerHTML = `We're sorry but we couldn't find what you were looking for, please check the spelling or try a more specific search query.`;
+        // displayErrorMessage.innerHTML = 'Ooops, something went wrong. Please try again.'
 
     }
 }
+
+// if (response.status === 404) {
+//     displayErrorMessage.innerHTML = `We're sorry but we couldn't find what you were looking for, please check the spelling or try a more defined search query.`;
+// } else {
+//     throw new Error(`HTTP error! status: ${response.status}`);
+// }
 
 input.addEventListener('keyup', (e) => enterKeyTrigger(e, searchButton));
 searchButton.addEventListener('click', function () {
