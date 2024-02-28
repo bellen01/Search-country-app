@@ -10,24 +10,51 @@
 </head>
 
 <body>
+    <section class="hero">
+        <div class="test">
+            <div class="search-container1">
+                <h1>Country Search</h1>
+                <div id="welcome-text">
+                    <When>Welcome! Here you can search for countries either on name, capital or language.
+                        When getting multiple hits, click on the name of a country to get more information!</p>
+                </div>
+                <div id="search1">
+                    <div class="search-fields">
+                        <input type="text" id="search-field1" placeholder="Search country, language or capital">
+                        <select name="search-options1" id="search-options1">
+                            <option value="name" selected>Name</option>
+                            <option value="language">Language</option>
+                            <option value="capital">Capital</option>
+                        </select>
+                    </div>
+                    <button id="search-btn1">Search</button>
+                </div>
+                <p class="reminder">(Please keep in mind that unfortunately we don't fully support searching on part of
+                    language at
+                    this point.)</p>
+            </div>
+        </div>
+    </section>
     <main id='main-container'>
-        <h1>Isabelle's super awesome (but little ugly) country search</h1>
-        <div id="welcome-text">
-            <p>Welcome! Here you can search for countries either on full name or part of name, or you can search for
-                countries by capital or a specific language.</p>
-            <p>Please keep in mind that unfortunately we don't fully support searching on part of language at this
-                point.</p>
-            <p>When getting multiple hits, click on the name of a country to get more information!</p>
-        </div>
-        <div id="search">
-            <input type="text" id="search-field" placeholder="Search country, language or capital">
-            <select name="search-options" id="search-options">
-                <option value="name" selected>Name</option>
-                <option value="language">Language</option>
-                <option value="capital">Capital</option>
-            </select>
-            <button id="search-btn">Search</button>
-        </div>
+        <!-- <section class="search-container">
+                <h1>Isabelle's super awesome (but little ugly) country search</h1>
+                <div id="welcome-text">
+                    <p>Welcome! Here you can search for countries either on full name or part of name, or you can search for
+                        countries by capital or a specific language.</p>
+                        <p>Please keep in mind that unfortunately we don't fully support searching on part of language at this
+                            point.</p>
+                            <p>When getting multiple hits, click on the name of a country to get more information!</p>
+                        </div>
+                        <div id="search">
+                            <input type="text" id="search-field" placeholder="Search country, language or capital">
+                            <select name="search-options" id="search-options">
+                                <option value="name" selected>Name</option>
+                                <option value="language">Language</option>
+                                <option value="capital">Capital</option>
+                            </select>
+                            <button id="search-btn">Search</button>
+                        </div> -->
+        </section>
         <div id="display-error-message"></div>
         <div id="display-number-of-hits"></div>
 

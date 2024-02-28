@@ -1,9 +1,9 @@
 
-let input = document.getElementById('search-field');
-let searchButton = document.getElementById('search-btn');
+let input = document.getElementById('search-field1');
+let searchButton = document.getElementById('search-btn1');
 let displayErrorMessage = document.getElementById('display-error-message');
 let pageContent = document.getElementById('content-container');
-let selectedOption = document.getElementById('search-options');
+let selectedOption = document.getElementById('search-options1');
 let numberOfHits = document.getElementById('display-number-of-hits');
 
 input.focus();
