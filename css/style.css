@@ -21,7 +21,7 @@ html {
     /* display: flex;
     flex-direction: column;
     align-items: center; */
-    margin: 3rem 1rem;
+    margin: 3rem;
 }
 
 .hero {
@@ -273,6 +273,7 @@ h3 {
 .country-content {
     display: flex;
     justify-content: start;
+    padding-bottom: 2rem;
 }
 
 .country-data section {
@@ -300,4 +301,8 @@ a {
     width: 320px;
     display: block;
     padding: 10px 0;
+}
+
+ul {
+    list-style: none;
 }
