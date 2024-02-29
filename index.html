@@ -20,11 +20,31 @@
             <div id="search1">
                 <div class="search-fields">
                     <input type="text" id="search-field1" placeholder="Search country, language or capital">
-                    <select name="search-options1" id="search-options1">
-                        <option value="name" selected>Name</option>
-                        <option value="language">Language</option>
-                        <option value="capital">Capital</option>
-                    </select>
+                    <div class="select-menu">
+                        <div class="select-btn">
+                            <span class="select-text">Name</span>
+                            <span class="custom-arrow1"></span>
+                        </div>
+                        <ul class="options">
+                            <li class="option" value="option-name" id="option-text">
+                                <span class="option-text">Name</span>
+                            </li>
+                            <li class="option" value="option-language" id="option-text">
+                                <span class="option-text">Language</span>
+                            </li>
+                            <li class="option" value="option-capital" id="option-text">
+                                <span class="option-text">Capital</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- <div class="custom-select">
+                        <select name="search-options1" id="search-options1">
+                            <option value="name" selected>Name</option>
+                            <option value="language">Language</option>
+                            <option value="capital">Capital</option>
+                        </select>
+                        <span class="custom-arrow"></span>
+                    </div> -->
                 </div>
                 <button id="search-btn1">Search</button>
             </div>
@@ -34,7 +54,6 @@
         </div>
     </section>
     <main id='main-container'>
-        </section>
         <div id="display-error-message"></div>
         <div id="display-number-of-hits"></div>
         <div id="content-container"></div>

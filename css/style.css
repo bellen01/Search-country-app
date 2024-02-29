@@ -93,12 +93,43 @@ html {
     line-height: normal;
     padding: 2px 24px;
     width: auto;
+    border: 0;
+}
+
+.custom-select {
+    position: relative;
+}
+
+.custom-arrow {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    background: white;
+    height: 100%;
+    width: 2rem;
+    border-radius: 0 8px 8px 0;
+    pointer-events: none;
+}
+
+.custom-arrow::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: .4em solid transparent;
+    border-right: .4em solid transparent;
+    border-top: .4em solid #3c4043;
 }
 
 #search-field1:focus,
 #search-options1:focus {
     outline: none;
 }
+
 
 #search-btn1 {
     appearance: none;
@@ -209,4 +240,90 @@ a {
 
 ul {
     list-style: none;
+}
+
+.select-menu {
+    appearance: none;
+    /* box-sizing: border-box; */
+    /* height: 48px; */
+    width: 150px;
+    /* width: auto;
+    padding: 0 2rem; */
+}
+
+.select-text {
+    /* padding: 0 2rem 0 1rem; */
+}
+
+.select-menu .select-btn {
+    display: flex;
+    font-size: 16px;
+    height: 48px;
+    background-color: white;
+    color: #3c4043;
+    border-radius: 8px;
+    border-style: none;
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    letter-spacing: .25px;
+    line-height: normal;
+    padding: 2px 24px;
+    align-items: center;
+    position: relative;
+}
+
+.custom-arrow1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    background: white;
+    height: 100%;
+    width: 2rem;
+    border-radius: 0 8px 8px 0;
+    pointer-events: none;
+}
+
+.custom-arrow1::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: .4em solid transparent;
+    border-right: .4em solid transparent;
+    border-top: .4em solid #3c4043;
+}
+
+.select-menu .options {
+    position: absolute;
+    width: inherit;
+    /* width: 100%; */
+    /* padding: 20px; */
+    padding: 20px 0;
+    border-radius: 8px;
+    background: white;
+    /* border: .5px solid #3c4043; */
+    margin-top: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px, rgba(0, 0, 0, .14) 0 6px 10px 0, rgba(0, 0, 0, .12) 0 1px 18px 0;
+    display: none;
+}
+
+.select-menu.active .options {
+    display: block;
+}
+
+.options .option {
+    display: flex;
+    height: 40px;
+    cursor: pointer;
+    align-items: center;
+    /* padding: 0 16px; */
+    padding: 0 30px;
+}
+
+.options .option:hover {
+    background: #F2F2F2;
 }

@@ -6,6 +6,22 @@ let pageContent = document.getElementById('content-container');
 let selectedOption = document.getElementById('search-options1');
 let numberOfHits = document.getElementById('display-number-of-hits');
 
+const optionMenu = document.querySelector(".select-menu"),
+    selectBtn = optionMenu.querySelector(".select-btn"),
+    options = optionMenu.querySelectorAll(".option"),
+    selectText = optionMenu.querySelector(".select-text");
+
+selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+options.forEach(option => {
+    option.addEventListener("click", () => {
+        let selectedOption2 = option.querySelector('.option-text').innerText;
+        selectText.innerText = selectedOption2;
+
+        optionMenu.classList.toggle("active");
+    })
+})
+
 input.focus();
 
 let enterKeyTrigger = (e, btn) => {
@@ -168,11 +184,14 @@ async function fetchCountry(link) {
 
 input.addEventListener('keyup', (e) => enterKeyTrigger(e, searchButton));
 searchButton.addEventListener('click', function () {
-    if (selectedOption.value === 'name') {
+    if (selectText.innerText === 'Name') {
+        console.log('name selected');
         fetchCountry('https://restcountries.com/v3.1/name/');
-    } else if (selectedOption.value === 'language') {
+    } else if (selectText.innerText === 'Language') {
+        console.log('language selected');
         fetchCountry('https://restcountries.com/v3.1/lang/');
-    } else {
+    } else if (selectText.innerText === 'Capital') {
+        console.log('capital selected');
         fetchCountry('https://restcountries.com/v3.1/capital/');
     }
 });
