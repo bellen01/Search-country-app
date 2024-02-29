@@ -3,7 +3,6 @@ let input = document.getElementById('search-field1');
 let searchButton = document.getElementById('search-btn1');
 let displayErrorMessage = document.getElementById('display-error-message');
 let pageContent = document.getElementById('content-container');
-let selectedOption = document.getElementById('search-options1');
 let numberOfHits = document.getElementById('display-number-of-hits');
 
 const optionMenu = document.querySelector(".select-menu"),
@@ -185,13 +184,10 @@ async function fetchCountry(link) {
 input.addEventListener('keyup', (e) => enterKeyTrigger(e, searchButton));
 searchButton.addEventListener('click', function () {
     if (selectText.innerText === 'Name') {
-        console.log('name selected');
         fetchCountry('https://restcountries.com/v3.1/name/');
     } else if (selectText.innerText === 'Language') {
-        console.log('language selected');
         fetchCountry('https://restcountries.com/v3.1/lang/');
     } else if (selectText.innerText === 'Capital') {
-        console.log('capital selected');
         fetchCountry('https://restcountries.com/v3.1/capital/');
     }
 });
